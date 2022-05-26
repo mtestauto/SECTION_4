@@ -6,7 +6,7 @@ from selenium import webdriver
 def pytest_make_parametrize_id(config, val): return repr(val)
 
 def pytest_addoption(parser):
-    parser.addoption('--browser_name', action='store', default=None,
+    parser.addoption('--browser_name', action='store', default='chrome',
                      help="Укажите атрибут --browser_name: chrome или firefox")
 
 
