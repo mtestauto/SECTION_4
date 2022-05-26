@@ -1,3 +1,5 @@
+import time
+
 from .base_page import BasePage
 from .locators import ProductPageLocators
 from selenium.common.exceptions import NoAlertPresentException
@@ -13,7 +15,7 @@ class ProductPage(BasePage):
         print(product_main_name.text)
         product_basket_name = self.browser.find_element(*ProductPageLocators.NAME_PRODUCT_IN_BASKET_SUCCESS)
         print(product_basket_name.text)
-        assert product_main_name.text in product_basket_name.text, f"NOK {product_main_name.text} NOT IN " \
+        assert product_main_name.text == product_basket_name.text, f"NOK {product_main_name.text} NOT IN " \
                                                                    f"{product_basket_name.text}"
 
     def should_be_product_price_success(self):
@@ -21,8 +23,8 @@ class ProductPage(BasePage):
         print(price_main_value.text)
         price_prod_in_basket = self.browser.find_element(*ProductPageLocators.PRICE_PRODUCT_IN_BASKET)
         print(price_prod_in_basket.text)
-        assert price_main_value.text in price_prod_in_basket.text, f"NOK {price_main_value} " \
-                                                         f"NOT IN {price_prod_in_basket}"
+        assert price_main_value.text == price_prod_in_basket.text, f"NOK {price_main_value} NOT IN " \
+                                                                   f"{price_prod_in_basket}"
 
 
     def solve_quiz_and_get_code(self):
@@ -32,6 +34,7 @@ class ProductPage(BasePage):
         alert.send_keys(answer)
         alert.accept()
         try:
+            time.sleep(1)
             alert = self.browser.switch_to.alert
             alert_text = alert.text
             print(f"Your code: {alert_text}")
